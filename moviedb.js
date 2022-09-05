@@ -1,10 +1,25 @@
+import {
+  createRequire
+} from 'module';
+const require = createRequire(
+  import.meta.url);
+import ora from 'ora';
+
+
+
+
 const https = require("https");
 
-require("dotenv").config({ path: `${__dirname}/src/.env` });
+require("dotenv").config({
+  path: `./src/.env`
+});
 
 const apiKey = process.env.API_KEY;
 
-const { program } = require("commander");
+
+const {
+  program
+} = require("commander");
 
 program
   .command("get-persons")
@@ -12,8 +27,15 @@ program
   .requiredOption("-p, --popular", "Fetch the popular persons")
   .option("--page <type>", "The page of persons data results to fetch")
   .action(function (props) {
-    // console.log(props);
-    const { page } = props;
+
+    const {
+      page
+    } = props;
+    const spinner = ora('Loading unicorns').start();
+    setTimeout(() => {
+      spinner.color = 'yellow';
+      spinner.text = 'Loading rainbows';
+    }, 1000);
 
     https
       .get(
@@ -24,10 +46,17 @@ program
           resp.on("data", (chunk) => {
             data += chunk;
           });
-          // The whole response has been received. Print out the result.
-          resp.on("end", () => {
-            console.log(JSON.parse(data));
-          });
+
+
+            // The whole response has been received. Print out the result.
+            resp.on("end", () => {
+              setTimeout(() => {
+                spinner.stop()
+                console.log(JSON.parse(data));
+              }, 3000)
+            });
+
+
         }
       )
       .on("error", (err) => {
