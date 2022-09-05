@@ -9,18 +9,12 @@ const { program } = require("commander");
 program
   .command("get-persons")
   .description("Make a network request to fetch the most popular persons")
-  .option("-p, --popular", "Fetch the popular persons")
+  .requiredOption("-p, --popular", "Fetch the popular persons")
   .option("--page <type>", "The page of persons data results to fetch")
   .action(function (props) {
     // console.log(props);
     const { page } = props;
-    // const pageType = Object.keys(props).find((key) => {
-    //   if (key === "popular") {
-    //     return key;
-    //   }
-    // });
 
-    // console.log(pageType);
     https
       .get(
         `https://api.themoviedb.org/3/person/popular?api_key=${apiKey}&page=${page}`,
