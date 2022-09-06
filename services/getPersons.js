@@ -25,23 +25,23 @@ function getPersons(props) {
 
     const request = https.request(options, (response) => {
 
-        let data = '';
+      let responseBody = '';
       response.on('data', (chunk) => {
-        data += chunk;
+        responseBody += chunk;
       });
 
       response.on("end", () => {
+        const data = JSON.parse(responseBody)
         setTimeout(() => {
           spinner.stop()
           //if success then print the data, if not then do spinner.fail()
           if (response.statusCode === 200) {
-            console.log(JSON.parse(data));
+            console.log(data);
             spinner.succeed('Data showed successfully!')
           } else {
             spinner.fail('Something went wrong');
           }
         }, 3000)
-
       });
     })
 
