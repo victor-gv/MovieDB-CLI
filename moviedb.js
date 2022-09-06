@@ -35,7 +35,7 @@ program
           spinner.stop()
           //if success then print the data, if not then do spinner.fail()
           if (response.statusCode === 200) {
-            //console.log(JSON.parse(data));
+            console.log(JSON.parse(data));
           } else {
             spinner.fail('Something went wrong');
           }
