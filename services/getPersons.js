@@ -16,8 +16,16 @@ function getPersons(props) {
 
     const url = `https://api.themoviedb.org/3/person/popular?api_key=${apiKey}&page=${page}`;
 
-    const request = https.request(url, (response) => {
-      let data = '';
+    const options = {
+        hostname: 'api.themoviedb.org',
+        path: `/3/person/popular?api_key=${apiKey}&page=${page}`,
+        method: 'GET'
+    }
+
+
+    const request = https.request(options, (response) => {
+
+        let data = '';
       response.on('data', (chunk) => {
         data += chunk;
       });
