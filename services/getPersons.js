@@ -1,5 +1,6 @@
 
 import ora from 'ora';
+import chalk from 'chalk';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 
@@ -32,12 +33,28 @@ function getPersons(props) {
 
       response.on("end", () => {
         const data = JSON.parse(responseBody)
+        const totalPages = data.total_pages;
         setTimeout(() => {
           spinner.stop()
           //if success then print the data, if not then do spinner.fail()
           if (response.statusCode === 200) {
-            console.log(data);
-            spinner.succeed('Data showed successfully!')
+            data.results.map((person) =>{
+              console.log("--------------------------");
+              console.log("Person:");
+              console.log("\n");
+              console.log("ID:", person.id);
+              console.log("Name:", person.name);
+              if (person.known_for_department === 'Acting'){
+                console.log(`Department:`, chalk.magenta(person.known_for_department))
+              }
+              
+            })  
+           // console.log(data);
+            if (totalPages > page){
+            console.log(chalk.white(`----------------------------------`))
+            console.log(chalk.white(`\n Page: ${page} of ${totalPages}`))
+            }
+            spinner.succeed('Data showed successfully! \n')
           } else {
             spinner.fail('Something went wrong');
           }
