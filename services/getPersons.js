@@ -47,18 +47,35 @@ function getPersons(props) {
               if (person.known_for_department === 'Acting'){
                 console.log(`Department:`, chalk.magenta(person.known_for_department))
               }
+
+
+              if (person.known_for.length > 0){
+                person.known_for.map((movie) => {
+                  if (movie.title !== undefined){
+                    console.log(`\n`);
+                    console.log(chalk.white(`\t Movie:`))
+                    console.log(chalk.white(`\t ID: ${movie.id}`))
+                    console.log(chalk.white(`\t Release date: ${movie.release_date}`))
+                    console.log(chalk.white(`\t Title: ${movie.title}`))
+                  }
+                })
+              } else {
+                console.log(`${person.name} doesn't appear in any movie \n`)
+              }
+
+
               
             })  
-           // console.log(data);
             if (totalPages > page){
             console.log(chalk.white(`----------------------------------`))
             console.log(chalk.white(`\n Page: ${page} of ${totalPages}`))
             }
-            spinner.succeed('Data showed successfully! \n')
+            spinner.succeed('Popular Persons data loaded \n')
           } else {
             spinner.fail('Something went wrong');
           }
         }, 3000)
+
       });
     })
 
